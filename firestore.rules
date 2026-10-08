@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net: Default-deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      allow create, update: if isSignedIn() && request.auth.uid == userId;
+      allow delete: if false;
+    }
+
+    // Jobs collection
+    match /jobs/{jobId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(jobId);
+      allow delete: if isSignedIn() && isValidId(jobId);
+    }
+
+    // Candidates collection
+    match /candidates/{candidateId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(candidateId);
+      allow delete: if isSignedIn() && isValidId(candidateId);
+    }
+
+    // Screening Results collection
+    match /screening_results/{resultId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(resultId);
+      allow delete: if isSignedIn() && isValidId(resultId);
+    }
+
+    // Interviews collection
+    match /interviews/{interviewId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(interviewId);
+      allow delete: if isSignedIn() && isValidId(interviewId);
+    }
+
+    // Settings collection
+    match /settings/{settingId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(settingId);
+      allow delete: if false;
+    }
+  }
+}

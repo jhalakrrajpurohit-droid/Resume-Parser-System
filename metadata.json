@@ -1,0 +1,8 @@
+{
+  "name": "HireLens AI",
+  "description": "AI-Powered Resume Screening & Candidate Matching System for HR departments, recruiters, and hiring managers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

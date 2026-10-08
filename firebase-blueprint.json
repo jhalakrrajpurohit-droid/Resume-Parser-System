@@ -1,0 +1,140 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "HR professional or recruiter profile.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string" },
+        "organization": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "displayName"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Job requirement created by HR.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "department": { "type": "string" },
+        "location": { "type": "string" },
+        "employmentType": { "type": "string" },
+        "experienceLevel": { "type": "string" },
+        "educationRequirement": { "type": "string" },
+        "description": { "type": "string" },
+        "requiredSkills": { "type": "array" },
+        "preferredSkills": { "type": "array" },
+        "certifications": { "type": "array" },
+        "responsibilities": { "type": "array" },
+        "technicalRequirements": { "type": "array" },
+        "softSkills": { "type": "array" },
+        "keywords": { "type": "array" },
+        "seniority": { "type": "string" },
+        "status": { "type": "string" },
+        "applicantsCount": { "type": "number" },
+        "shortlistedCount": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "department", "status"]
+    },
+    "Candidate": {
+      "title": "Candidate",
+      "description": "Candidate profile and structured resume record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "jobId": { "type": "string" },
+        "jobTitle": { "type": "string" },
+        "resumeFileName": { "type": "string" },
+        "uploadDate": { "type": "string" },
+        "pipelineStatus": { "type": "string" },
+        "candidateName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "totalExperienceYears": { "type": "number" },
+        "overallScore": { "type": "number" },
+        "recommendation": { "type": "string" }
+      },
+      "required": ["id", "jobId", "candidateName", "pipelineStatus"]
+    },
+    "ScreeningResult": {
+      "title": "ScreeningResult",
+      "description": "AI-calculated explainable match scores, skill gaps, and evidence.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "candidateId": { "type": "string" },
+        "jobId": { "type": "string" },
+        "recommendation": { "type": "string" },
+        "aiExplanation": { "type": "string" },
+        "scores": { "type": "object" },
+        "skillGaps": { "type": "array" },
+        "matchedCompetenciesCount": { "type": "number" },
+        "totalCompetenciesCount": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "candidateId", "jobId", "recommendation"]
+    },
+    "Interview": {
+      "title": "Interview",
+      "description": "AI-generated questions and interview feedback notes.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "candidateId": { "type": "string" },
+        "jobId": { "type": "string" },
+        "category": { "type": "string" },
+        "question": { "type": "string" },
+        "context": { "type": "string" },
+        "sampleAnswerCriteria": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "candidateId", "jobId", "question"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Application settings including Fair Screening and score weights.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fairScreening": { "type": "boolean" },
+        "scoreWeights": { "type": "object" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "fairScreening"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles for authenticated recruiters"
+    },
+    "/jobs/{jobId}": {
+      "schema": "Job",
+      "description": "Job requisitions created by HR"
+    },
+    "/candidates/{candidateId}": {
+      "schema": "Candidate",
+      "description": "Candidates registered or uploaded for screening"
+    },
+    "/screening_results/{screeningResultId}": {
+      "schema": "ScreeningResult",
+      "description": "AI screening scores and skill gap records"
+    },
+    "/interviews/{interviewId}": {
+      "schema": "Interview",
+      "description": "AI-generated interview questions and notes"
+    },
+    "/settings/{settingsId}": {
+      "schema": "Settings",
+      "description": "Organization and HR configuration"
+    }
+  }
+}
